@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Operações matemáticas (soma, subtração, divisão, multiplicação, raiz, potência, porcentagem, inverter valor)
+        //Operações matemáticas
+        //soma
         Button btnSoma = (Button) findViewById(R.id.btnSoma);
         btnSoma.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //subtrair
         Button btnSubtrai = (Button) findViewById(R.id.btnSubtrai);
         btnSubtrai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Multiplicação
         Button btnMultiplica = (Button) findViewById(R.id.btnMultiplica);
         btnMultiplica.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,21 +212,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Divisão
         Button btnDivide = (Button) findViewById(R.id.btnDivide);
         btnDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
-                    valor1 = Double.valueOf(txtResultado.getText().toString());
-                    txtResultado.setText("0");
-                    operacao = 4;
+
+
+                        valor1 = Double.valueOf(txtResultado.getText().toString());
+                        txtResultado.setText("0");
+                        operacao = 4;
+
+
                 } catch (Exception e) {
                     txtResultado.setText("0");
                     zerarTela = true;
                 }
+
             }
         });
 
+        //Raiz
         Button btnRaiz = (Button) findViewById(R.id.btnRaiz);
         btnRaiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,15 +251,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //btnPorcentagem
         Button btnPorcentagem = (Button) findViewById(R.id.btnPorcentagem);
         btnPorcentagem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    valor1 = Double.valueOf(txtResultado.getText().toString());
-                    txtResultado.setText("0");
-                    operacao = 6;
+
+                    Double valorPorcentagem = 0.00, resultadoPorcentagem = 0.00;
+
+                    valorPorcentagem = Double.valueOf(txtResultado.getText().toString());
+
+                    resultadoPorcentagem = valor1 * (valorPorcentagem / 100);
+
+                    txtResultado.setText(resultadoPorcentagem.toString());
                 } catch (Exception e) {
                     txtResultado.setText("0");
                     zerarTela = true;
@@ -263,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     valor1 = Double.valueOf(txtResultado.getText().toString());
                     txtResultado.setText("0");
-                    operacao = 7;
+                    operacao = 6;
                 } catch (Exception e) {
                     txtResultado.setText("0");
                     zerarTela = true;
@@ -302,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     Double valor2 = Double.valueOf(txtResultado.getText().toString());
-                    Double resultadoOperacao = 0.00;
+                    Double resultadoOperacao = 0.00 , valorPorcentagem = 0.00, resultadoPorcentagem = 0.00;;
 
                     switch (operacao){
                         case 1:
@@ -315,22 +331,29 @@ public class MainActivity extends AppCompatActivity {
                             resultadoOperacao = valor1 * valor2;
                             break;
                         case 4:
-                            resultadoOperacao = valor1 / valor2;
+                            if((valor1 == 0) || valor2 == 0 ) {
+                                txtResultado.setText("Divisão Invalida");
+                                break;
+                            }else {
+                                resultadoOperacao = valor1 / valor2;
+                            }
                             break;
                         case 5:
                             resultadoOperacao = Math.sqrt(valor2);
                             break;
                         case 6:
-                            resultadoOperacao = valor1 * (valor2 / 100);
-                            break;
-                        case 7:
                             resultadoOperacao = Math.pow(valor1, valor2);
                             break;
                         default:
                             break;
                     }
-                    txtResultado.setText(resultadoOperacao.toString());
-                    zerarTela = true;
+                    if(operacao == 4 && resultadoOperacao == 0.00){
+                        txtResultado.setText("Divisão por Zero");
+                        zerarTela = true;
+                    }else {
+                        txtResultado.setText(resultadoOperacao.toString());
+                        zerarTela = true;
+                    }
 
                 } catch (Exception e) {
                     txtResultado.setText("0");
